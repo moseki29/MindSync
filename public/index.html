@@ -7,116 +7,262 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🧠 MindSync</h1>
+  <!-- Login Page -->
+  <div id="loginPage" class="login-container">
+    <div class="login-box">
+      <div class="login-header">
+        <h1>🧠 MindSync</h1>
+        <p>Balance Your Study Goals with Your Wellness</p>
+      </div>
+      
+      <form onsubmit="handleLogin(event)" class="login-form">
+        <div class="form-group">
+          <label for="username">Username or Email</label>
+          <input type="text" id="username" placeholder="Enter your username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="login-btn">Login</button>
+        
+        <div class="login-footer">
+          <p>Don't have an account? <a href="#" onclick="toggleSignup()">Sign up here</a></p>
+          <p class="demo-info">📝 Demo: Use username: <strong>demo</strong>, password: <strong>demo123</strong></p>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Signup Form (Hidden by default) -->\n    <div id="signupPage" class="login-box signup-box" style="display: none;">
+      <div class="login-header">
+        <h1>🧠 Join MindSync</h1>
+        <p>Create Your Account</p>
+      </div>
+      
+      <form onsubmit="handleSignup(event)" class="login-form">
+        <div class="form-group">
+          <label for="signupUsername">Username</label>
+          <input type="text" id="signupUsername" placeholder="Choose a username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupConfirm">Confirm Password</label>
+          <input type="password" id="signupConfirm" placeholder="Confirm password" required>
+        </div>
+        
+        <button type="submit" class="login-btn">Create Account</button>
+        
+        <div class="login-footer">
+          <p>Already have an account? <a href="#" onclick="toggleSignup()">Login here</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App (Hidden until login) -->
+  <div id="appPage" class="app-container" style="display: none;">
+    <header class="app-header">
+      <div class="header-content">
+        <h1>🧠 MindSync</h1>
+        <div class="user-info">
+          <span id="welcomeUser">Welcome!</span>
+          <button onclick="handleLogout()" class="logout-btn">Logout</button>
+        </div>
+      </div>
       <p class="tagline">Balance Your Study Goals with Your Wellness</p>
     </header>
 
     <nav class="navbar">
-      <button class="nav-btn active" onclick="showTab('dashboard')">Dashboard</button>
-      <button class="nav-btn" onclick="showTab('study')">Study Planner</button>
-      <button class="nav-btn" onclick="showTab('wellness')">Wellness Check-in</button>
-      <button class="nav-btn" onclick="showTab('timetable')">Timetable</button>
+      <button class="nav-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
+      <button class="nav-btn" onclick="showTab('study')">📚 Study Planner</button>
+      <button class="nav-btn" onclick="showTab('wellness')">💚 Wellness Check-in</button>
+      <button class="nav-btn" onclick="showTab('timetable')">📅 Timetable</button>
     </nav>
 
-    <!-- Dashboard Tab -->
-    <section id="dashboard" class="tab-content active">
-      <h2>Your Overview</h2>
-      <div class="dashboard-grid">
-        <div class="card">
-          <h3>📚 Study Progress</h3>
-          <div class="progress-item">
-            <span>Weekly Study Hours</span>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 65%;"></div>
-            </div>
-            <span class="progress-text">6.5 / 10 hours</span>
-          </div>
-        </div>
-        <div class="card">
-          <h3>💚 Wellness Status</h3>
-          <div class="wellness-stats">
-            <div class="stat-item">
-              <span>Mood</span>
-              <span class="stat-value">7/10</span>
-            </div>
-            <div class="stat-item">
-              <span>Stress Level</span>
-              <span class="stat-value">4/10</span>
+    <div class="container">
+      <!-- Dashboard Tab -->
+      <section id="dashboard" class="tab-content active">
+        <h2>📊 Your Overview</h2>
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>📚 Study Progress</h3>
+            <div class="progress-item">
+              <span>Weekly Study Hours</span>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%;"></div>
+              </div>
+              <span class="progress-text">6.5 / 10 hours</span>
             </div>
           </div>
+          
+          <div class="card">
+            <h3>💚 Wellness Status</h3>
+            <div class="wellness-stats">
+              <div class="stat-item">
+                <span>😊 Mood</span>
+                <span class="stat-value" id="dashboardMood">7/10</span>
+              </div>
+              <div class="stat-item">
+                <span>😰 Stress Level</span>
+                <span class="stat-value" id="dashboardStress">4/10</span>
+              </div>
+              <div class="stat-item">
+                <span>😟 Anxiety</span>
+                <span class="stat-value" id="dashboardAnxiety">3/10</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card recommendation-card">
+            <h3>💡 AI Recommendation</h3>
+            <p class="recommendation" id="aiRecommendation">Your stress is moderate. Consider taking a 15-minute break or going for a walk before your next study session.</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>💡 AI Recommendation</h3>
-          <p class="recommendation">Your stress is moderate. Consider taking a 15-minute break or going for a walk before your next study session.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Study Planner Tab -->
-    <section id="study" class="tab-content">
-      <h2>Study Planner</h2>
-      <div class="form-section">
-        <h3>Add Study Module</h3>
-        <form onsubmit="addModule(event)">
-          <input type="text" placeholder="Module Name" id="moduleName" required>
-          <input type="number" placeholder="Weight (1-10)" id="moduleWeight" min="1" max="10" required>
-          <input type="number" placeholder="Target Hours" id="targetHours" required>
-          <button type="submit">Add Module</button>
+      <!-- Study Planner Tab -->
+      <section id="study" class="tab-content">
+        <h2>📚 Study Planner</h2>
+        <div class="form-section">
+          <h3>Add Study Module</h3>
+          <form onsubmit="addModule(event)">
+            <input type="text" placeholder="Module Name (e.g., Math, English)" id="moduleName" required>
+            <div class="input-row">
+              <div>
+                <label>Weight (1-10)</label>
+                <input type="number" placeholder="How important?" id="moduleWeight" min="1" max="10" required>
+              </div>
+              <div>
+                <label>Target Hours/Week</label>
+                <input type="number" placeholder="Hours to study" id="targetHours" required>
+              </div>
+            </div>
+            <button type="submit">➕ Add Module</button>
+          </form>
+        </div>
+        <div id="modulesList" class="modules-list">
+          <!-- Modules will be listed here -->
+        </div>
+      </section>
+
+      <!-- Wellness Check-in Tab -->
+      <section id="wellness" class="tab-content">
+        <h2>💚 Wellness Check-in</h2>
+        
+        <div class="wellness-guide">
+          <h3>📖 Understanding Your Wellness Metrics</h3>
+          <div class="guide-grid">
+            <div class="guide-card">
+              <h4>😊 Mood (How you feel emotionally)</h4>
+              <p><strong>1-3:</strong> 😢 Very sad, upset, depressed</p>
+              <p><strong>4-6:</strong> 😐 Neutral, okay, average</p>
+              <p><strong>7-10:</strong> 😄 Happy, great, excellent</p>
+            </div>
+            
+            <div class="guide-card">
+              <h4>😰 Stress Level (Pressure & overwhelm)</h4>
+              <p><strong>1-3:</strong> ✅ Relaxed, calm, in control</p>
+              <p><strong>4-6:</strong> ⚠️ Moderate stress, some pressure</p>
+              <p><strong>7-10:</strong> 🚨 Very stressed, overwhelmed</p>
+            </div>
+            
+            <div class="guide-card">
+              <h4>😟 Anxiety (Worry & nervousness)</h4>
+              <p><strong>1-3:</strong> 😌 Peaceful, no worries</p>
+              <p><strong>4-6:</strong> 😕 Some nervousness, minor worry</p>
+              <p><strong>7-10:</strong> 😰 High anxiety, very worried</p>
+            </div>
+          </div>
+        </div>
+
+        <form onsubmit="logWellness(event)" class="wellness-form">
+          <h3>Log Your Daily Wellness</h3>
+          
+          <div class="form-group wellness-slider">
+            <div class="slider-label">
+              <label>😊 Mood</label>
+              <span class="slider-info">How happy/sad are you feeling?</span>
+            </div>
+            <input type="range" min="1" max="10" id="moodScore" value="5">
+            <div class="slider-display">
+              <span id="moodValue">5</span>
+              <span id="moodText" class="mood-text">Neutral</span>
+            </div>
+          </div>
+
+          <div class="form-group wellness-slider">
+            <div class="slider-label">
+              <label>😰 Stress Level</label>
+              <span class="slider-info">How pressured/overwhelmed do you feel?</span>
+            </div>
+            <input type="range" min="1" max="10" id="stressLevel" value="5">
+            <div class="slider-display">
+              <span id="stressValue">5</span>
+              <span id="stressText" class="stress-text">Moderate</span>
+            </div>
+          </div>
+
+          <div class="form-group wellness-slider">
+            <div class="slider-label">
+              <label>😟 Anxiety Level</label>
+              <span class="slider-info">How worried/nervous do you feel?</span>
+            </div>
+            <input type="range" min="1" max="10" id="anxietyLevel" value="5">
+            <div class="slider-display">
+              <span id="anxietyValue">5</span>
+              <span id="anxietyText" class="anxiety-text">Moderate</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>💤 Hours Slept Last Night</label>
+            <input type="number" id="sleepHours" step="0.5" min="0" max="24" placeholder="e.g., 7.5">
+          </div>
+
+          <div class="form-group">
+            <label>📝 Notes (Optional)</label>
+            <textarea id="wellnessNotes" placeholder="Anything else on your mind? How are you feeling?"></textarea>
+          </div>
+
+          <button type="submit">✅ Log Check-in</button>
         </form>
-      </div>
-      <div id="modulesList" class="modules-list">
-        <!-- Modules will be listed here -->
-      </div>
-    </section>
 
-    <!-- Wellness Check-in Tab -->
-    <section id="wellness" class="tab-content">
-      <h2>Wellness Check-in</h2>
-      <form onsubmit="logWellness(event)" class="wellness-form">
-        <div class="form-group">
-          <label>Mood (1-10)</label>
-          <input type="range" min="1" max="10" id="moodScore" value="5">
-          <span id="moodValue">5</span>
+        <div id="wellnessHistory" class="wellness-history">
+          <!-- Previous check-ins will be listed here -->
         </div>
-        <div class="form-group">
-          <label>Stress Level (1-10)</label>
-          <input type="range" min="1" max="10" id="stressLevel" value="5">
-          <span id="stressValue">5</span>
-        </div>
-        <div class="form-group">
-          <label>Anxiety Level (1-10)</label>
-          <input type="range" min="1" max="10" id="anxietyLevel" value="5">
-          <span id="anxietyValue">5</span>
-        </div>
-        <div class="form-group">
-          <label>Hours Slept</label>
-          <input type="number" id="sleepHours" step="0.5" min="0" max="24">
-        </div>
-        <textarea placeholder="Any additional notes?" id="wellnessNotes"></textarea>
-        <button type="submit">Log Check-in</button>
-      </form>
-    </section>
+      </section>
 
-    <!-- Timetable Tab -->
-    <section id="timetable" class="tab-content">
-      <h2>Weekly Timetable</h2>
-      <div class="timetable">
-        <div class="timetable-header">
-          <div>Monday</div>
-          <div>Tuesday</div>
-          <div>Wednesday</div>
-          <div>Thursday</div>
-          <div>Friday</div>
-          <div>Saturday</div>
-          <div>Sunday</div>
+      <!-- Timetable Tab -->
+      <section id="timetable" class="tab-content">
+        <h2>📅 Weekly Timetable</h2>
+        <div class="timetable">
+          <div class="timetable-header">
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            <div>Saturday</div>
+            <div>Sunday</div>
+          </div>
+          <div class="timetable-body" id="timetableBody">
+            <!-- Timetable entries will be populated here -->
+          </div>
         </div>
-        <div class="timetable-body" id="timetableBody">
-          <!-- Timetable entries will be populated here -->
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 
   <script src="app.js"></script>
