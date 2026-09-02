@@ -1,0 +1,23 @@
+{
+  "name": "mindsync",
+  "version": "1.0.0",
+  "description": "Integrated personal productivity & wellness platform",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "init-admin": "node server/init-admin.js"
+  },
+  "keywords": ["study", "wellness", "productivity", "planner"],
+  "author": "moseki29",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

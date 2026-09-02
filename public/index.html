@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindSync - Smart Study & Wellness Platform</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 MindSync</h1>
+      <p class="tagline">Balance Your Study Goals with Your Wellness</p>
+    </header>
+
+    <nav class="navbar">
+      <button class="nav-btn active" onclick="showTab('dashboard')">Dashboard</button>
+      <button class="nav-btn" onclick="showTab('study')">Study Planner</button>
+      <button class="nav-btn" onclick="showTab('wellness')">Wellness Check-in</button>
+      <button class="nav-btn" onclick="showTab('timetable')">Timetable</button>
+    </nav>
+
+    <!-- Dashboard Tab -->
+    <section id="dashboard" class="tab-content active">
+      <h2>Your Overview</h2>
+      <div class="dashboard-grid">
+        <div class="card">
+          <h3>📚 Study Progress</h3>
+          <div class="progress-item">
+            <span>Weekly Study Hours</span>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 65%;"></div>
+            </div>
+            <span class="progress-text">6.5 / 10 hours</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>💚 Wellness Status</h3>
+          <div class="wellness-stats">
+            <div class="stat-item">
+              <span>Mood</span>
+              <span class="stat-value">7/10</span>
+            </div>
+            <div class="stat-item">
+              <span>Stress Level</span>
+              <span class="stat-value">4/10</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>💡 AI Recommendation</h3>
+          <p class="recommendation">Your stress is moderate. Consider taking a 15-minute break or going for a walk before your next study session.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study Planner Tab -->
+    <section id="study" class="tab-content">
+      <h2>Study Planner</h2>
+      <div class="form-section">
+        <h3>Add Study Module</h3>
+        <form onsubmit="addModule(event)">
+          <input type="text" placeholder="Module Name" id="moduleName" required>
+          <input type="number" placeholder="Weight (1-10)" id="moduleWeight" min="1" max="10" required>
+          <input type="number" placeholder="Target Hours" id="targetHours" required>
+          <button type="submit">Add Module</button>
+        </form>
+      </div>
+      <div id="modulesList" class="modules-list">
+        <!-- Modules will be listed here -->
+      </div>
+    </section>
+
+    <!-- Wellness Check-in Tab -->
+    <section id="wellness" class="tab-content">
+      <h2>Wellness Check-in</h2>
+      <form onsubmit="logWellness(event)" class="wellness-form">
+        <div class="form-group">
+          <label>Mood (1-10)</label>
+          <input type="range" min="1" max="10" id="moodScore" value="5">
+          <span id="moodValue">5</span>
+        </div>
+        <div class="form-group">
+          <label>Stress Level (1-10)</label>
+          <input type="range" min="1" max="10" id="stressLevel" value="5">
+          <span id="stressValue">5</span>
+        </div>
+        <div class="form-group">
+          <label>Anxiety Level (1-10)</label>
+          <input type="range" min="1" max="10" id="anxietyLevel" value="5">
+          <span id="anxietyValue">5</span>
+        </div>
+        <div class="form-group">
+          <label>Hours Slept</label>
+          <input type="number" id="sleepHours" step="0.5" min="0" max="24">
+        </div>
+        <textarea placeholder="Any additional notes?" id="wellnessNotes"></textarea>
+        <button type="submit">Log Check-in</button>
+      </form>
+    </section>
+
+    <!-- Timetable Tab -->
+    <section id="timetable" class="tab-content">
+      <h2>Weekly Timetable</h2>
+      <div class="timetable">
+        <div class="timetable-header">
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
+          <div>Sunday</div>
+        </div>
+        <div class="timetable-body" id="timetableBody">
+          <!-- Timetable entries will be populated here -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
